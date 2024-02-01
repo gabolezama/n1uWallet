@@ -5,7 +5,8 @@ import { FlatList } from 'react-native-gesture-handler'
 interface Props {
     onChangeCategory: (category: string)=> void
 }
-const NAVBAR_OPTIONS = [
+
+export const NAVBAR_OPTIONS = [
     "people",
     "planets",
     "films",

@@ -1,6 +1,5 @@
 import { UseQueryResult, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { IPeopleDetailEntity } from '../Core/ItemDetailEntity';
 
 interface StarWarsData {
   results: any[]
@@ -9,7 +8,7 @@ interface StarWarsData {
 export type HttpResponseFromSwapi = UseQueryResult<StarWarsData, Error>;
 
 const fetchStarWarsData = async (endpoint: string): Promise<StarWarsData> => {
-    const { data } = await axios.get<StarWarsData>(`https://swapi.dev/api/${endpoint}/?page=${page}`);
+    const { data } = await axios.get<StarWarsData>(`https://swapi.dev/api/${endpoint}/`);
     return data;
 };
 
@@ -23,23 +22,31 @@ export const getAllByCategory = (endpoint: string) => {
   if(!response.data){
     return []
   }
-  return response.data.results
+  return response.data.results.map((item:any)=>{
+    return {
+      name: item.name || item.title || 'desconocido',
+      url: item.url
+    }
+  })
 };
 
 export const getItemDitails = (url: string) => {
-  const response = useQuery({queryKey: ['getDetails', url], queryFn: () => fetchByUrl(url)});
-  console.log('DEATIL GATEWAY: ', response);
+  const response = useQuery({queryKey: ['getDetails', url], queryFn: () => fetchByUrl(url)}); 
   
   if(!response.data){
-    return {}
+    return []
   }
-  return ({
-    name: response.data.name,
-    gender: response.data.gender,
-    mass: response.data.mass,
-    height: response.data.height,
-    birthYear: response.data.birth_year,
-    hairColor: response.data.hair_color,
-    eyesColor: response.data.eye_color,
-  }) as IPeopleDetailEntity
+  delete response.data.films;
+  delete response.data.starships;
+  delete response.data.vehicles;
+  delete response.data.planets;
+  delete response.data.species;
+  delete response.data.homeworld;
+  delete response.data.created;
+  delete response.data.edited;
+  delete response.data.url;
+  delete response.data.characters
+
+  const entriesToShow = Object.entries(response.data);
+  return entriesToShow
 };

@@ -1,14 +1,17 @@
 import { useNavigation } from "@react-navigation/native";
-import { FlatList, StyleSheet, Text, View } from "react-native"
-import RenderItem from "./Components/RenderItem";
+import { FlatList, Text, View, useWindowDimensions } from "react-native"
+import RenderItem from "./Components/RenderItem/RenderItem";
 import Navbar from "../Navbar/Navbar";
 import { useState } from "react";
 import { getAllByCategory } from "../../Gateway/appGateway";
+import Spinner from "../Spinner/Spinner";
+import { makeStyles } from "./Home.styles";
 
 export const Home = () => {
+    const {height, width} = useWindowDimensions();
     const [category, setCategory] = useState<string>('people/');
     const navigation: any = useNavigation();
-    
+    const styles = makeStyles();
     const data: any = getAllByCategory(category);
 
     const onViewDetails = (url:string) =>{
@@ -25,27 +28,10 @@ export const Home = () => {
             <FlatList
                 data={data}
                 style={styles.list}
-                renderItem={({item}) => RenderItem(item, onViewDetails)}
-                ListEmptyComponent={<Text>Cargando la data...</Text>}
+                renderItem={({item}) => RenderItem(item, onViewDetails, height, width)}
+                ListEmptyComponent={<Spinner/>}
                 showsVerticalScrollIndicator={false}
             />
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 16,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    list:{
-        width: '70%',
-        flexDirection: 'column'
-    },
-    title:{
-        fontSize: 20,
-        fontWeight: 'bold'
-    }
-})
