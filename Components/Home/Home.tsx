@@ -11,7 +11,7 @@ export const Home = () => {
     const {height, width} = useWindowDimensions();
     const [category, setCategory] = useState<string>('people/');
     const navigation: any = useNavigation();
-    const styles = makeStyles();
+    const styles = makeStyles(height, width);
     const data: any = getAllByCategory(category);
 
     const onViewDetails = (url:string) =>{

@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native"
 
-export const makeStyles = () =>{
+export const makeStyles = (height: number, width: number) =>{
     return StyleSheet.create({
         container: {
             flex: 1,
@@ -9,7 +9,7 @@ export const makeStyles = () =>{
             alignItems: 'center'
         },
         list:{
-            width: '70%',
+            width: width * 0.7,
             flexDirection: 'column'
         },
         title:{

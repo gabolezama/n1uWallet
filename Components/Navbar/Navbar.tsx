@@ -1,6 +1,8 @@
 import React from 'react'
-import { StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, useWindowDimensions } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
+import { makeMutable } from 'react-native-reanimated'
+import { makeStyles } from './Navbar.styles'
 
 interface Props {
     onChangeCategory: (category: string)=> void
@@ -13,8 +15,9 @@ export const NAVBAR_OPTIONS = [
     "vehicles"
 ]
 export default function Navbar(props: Props) {
+    const {height, width} = useWindowDimensions();
     const {onChangeCategory} = props
-
+    const styles = makeStyles(height, width);
     return (
         <FlatList
             data={NAVBAR_OPTIONS}
@@ -28,27 +31,5 @@ export default function Navbar(props: Props) {
         />
     )
 }
-
-const styles = StyleSheet.create({
-    bar:{
-        width: '90%',
-        height: '7%',
-        marginTop: 10
-    },
-    barContent:{
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-    },
-    button:{
-        padding: 5,
-        color: 'white',
-        backgroundColor: 'purple',
-        borderRadius: 10
-    },
-    buttonText:{
-        color: 'white'
-    }
-})
 
 

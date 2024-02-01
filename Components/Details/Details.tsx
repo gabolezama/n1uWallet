@@ -18,18 +18,21 @@ export default function Details(props: Props) {
     const details: string[][] = getItemDitails(route.params.url) as any;
     const styles = makeStyles(height, width); 
     
-    return (  
-            <ScrollView style={styles.container}>
-                {
-                    details.length > 0? 
-                    details.map(([key, value],index) => (
+    return ( 
+        <View style={styles.details}>
+            {
+                details.length > 0 ?
+                <ScrollView style={styles.container}>
+                    {details.map(([key, value], index) => (
                         <View key={index} style={styles.keyVelueContainer}>
                             <Text style={styles.keyText}>{key}:</Text>
                             <Text>{value}</Text>
                         </View>
-                    )):
-                    <Spinner/>
-                }
-            </ScrollView>        
+                    ))}
+                </ScrollView>
+                :
+                <Spinner />
+            }
+        </View>
     )
 }

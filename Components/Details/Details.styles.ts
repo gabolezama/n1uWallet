@@ -2,6 +2,11 @@ import { StyleSheet } from "react-native"
 
 export const makeStyles = (height: number, width: number) => {
     return StyleSheet.create({
+        details:{
+            flex:1,
+            justifyContent:'center',
+            alignContent: 'center'
+        },
         container: {
             height: height * 0.5,
             borderColor: 'black',
