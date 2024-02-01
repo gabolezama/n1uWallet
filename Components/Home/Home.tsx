@@ -1,19 +1,15 @@
 import { useNavigation } from "@react-navigation/native";
 import { FlatList, StyleSheet, Text, View } from "react-native"
-import { getAllVehicles } from "../../Services/Swapi.service";
 import RenderItem from "./Components/RenderItem";
 import Navbar from "../Navbar/Navbar";
 import { useState } from "react";
+import { getAllByCategory } from "../../Gateway/appGateway";
 
-interface SelectorProps {
-}
-
-
-export const Home = (props: SelectorProps) => {
-    const [category, setCategory] = useState('people/');
+export const Home = () => {
+    const [category, setCategory] = useState<string>('people/');
     const navigation: any = useNavigation();
     
-    const data: any = getAllVehicles(category);
+    const data: any = getAllByCategory(category);
 
     const onViewDetails = (url:string) =>{
         navigation.navigate('details', {url})
@@ -24,7 +20,7 @@ export const Home = (props: SelectorProps) => {
 
     return (
         <View style={styles.container}>
-            <Text>Bienvenido a la tienda Star Wars</Text>
+            <Text style={styles.title}>Bienvenido a la tienda Star Wars</Text>
             <Navbar onChangeCategory={onChangeCategory}/>
             <FlatList
                 data={data}
@@ -47,5 +43,9 @@ const styles = StyleSheet.create({
     list:{
         width: '70%',
         flexDirection: 'column'
+    },
+    title:{
+        fontSize: 20,
+        fontWeight: 'bold'
     }
 })

@@ -1,8 +1,6 @@
-
-
 import { UseQueryResult, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { IItemDetailEntity } from '../Services/ItemDetailEntity';
+import { IPeopleDetailEntity } from '../Core/ItemDetailEntity';
 
 interface StarWarsData {
   results: any[]
@@ -11,7 +9,7 @@ interface StarWarsData {
 export type HttpResponseFromSwapi = UseQueryResult<StarWarsData, Error>;
 
 const fetchStarWarsData = async (endpoint: string): Promise<StarWarsData> => {
-    const { data } = await axios.get<StarWarsData>(`https://swapi.dev/api/${endpoint}/?page=5`);
+    const { data } = await axios.get<StarWarsData>(`https://swapi.dev/api/${endpoint}/?page=${page}`);
     return data;
 };
 
@@ -20,7 +18,7 @@ const fetchByUrl = async (url: string): Promise<any> => {
     return data;
 };
 
-export const useSwapi = (endpoint: string) => {
+export const getAllByCategory = (endpoint: string) => {
   const response: HttpResponseFromSwapi = useQuery({queryKey: ['swapi', endpoint], queryFn: () => fetchStarWarsData(endpoint)});
   if(!response.data){
     return []
@@ -28,8 +26,10 @@ export const useSwapi = (endpoint: string) => {
   return response.data.results
 };
 
-export const getVehicleDitails = (url: string) => {
+export const getItemDitails = (url: string) => {
   const response = useQuery({queryKey: ['getDetails', url], queryFn: () => fetchByUrl(url)});
+  console.log('DEATIL GATEWAY: ', response);
+  
   if(!response.data){
     return {}
   }
@@ -41,5 +41,5 @@ export const getVehicleDitails = (url: string) => {
     birthYear: response.data.birth_year,
     hairColor: response.data.hair_color,
     eyesColor: response.data.eye_color,
-  }) as IItemDetailEntity
+  }) as IPeopleDetailEntity
 };

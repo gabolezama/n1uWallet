@@ -1,4 +1,4 @@
-export interface IItemDetailEntity {
+export interface IPeopleDetailEntity {
     name: string,
     gender: string,
     mass: string,

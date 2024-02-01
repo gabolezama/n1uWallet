@@ -6,7 +6,7 @@ export default function RenderItem(item: any, onViewDetails: Function) {
 
     return (
         <View style={styles.cardContainer}>
-            <Text>{item.name}</Text>
+            <Text>{item?.name || item?.title}</Text>
             <TouchableOpacity style={styles.button} onPress={()=> onViewDetails(item.url)}>
                 <Text style={styles.buttonText}>Detalles</Text>
             </TouchableOpacity>

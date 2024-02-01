@@ -1,7 +1,7 @@
 import { RouteProp, useRoute } from "@react-navigation/native"
 import { StyleSheet, Text, View } from "react-native";
-import { IItemDetailEntity } from "../../Services/ItemDetailEntity";
-import { getVehicleDitails } from "../../Gateway/appGateway";
+import { getItemDitails } from "../../Gateway/appGateway";
+import { IPeopleDetailEntity } from "../../Core/ItemDetailEntity";
 
 interface Props {}
 
@@ -13,7 +13,7 @@ type DetailsRouteType ={
 export default function Details(props: Props) {
     const {} = props
     const route: RouteProp<DetailsRouteType> = useRoute();
-    const details = getVehicleDitails(route.params.url) as IItemDetailEntity
+    const details = getItemDitails(route.params.url) as IPeopleDetailEntity
     
     
     return (
